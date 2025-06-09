@@ -97,20 +97,20 @@ employees {
 
 ### Prerequisites
 - Node.js 18+
-- npm or yarn
+- Bun (recommended package manager)
 - Geoapify API key (for distance calculation)
 
 ### Installation
 
 1. **Clone the repository**
    ```bash
-   git clone <repository-url>
+   git clone https://github.com/remcostoeten/hr-expenses.git
    cd hr-expenses
    ```
 
 2. **Install dependencies**
    ```bash
-   npm install
+   bun install
    ```
 
 3. **Set up environment variables**
@@ -217,18 +217,18 @@ Monthly Cost = Distance (km) × €0.21 × Number of Office Days × 4.33 weeks
 
 ```bash
 # Development
-npm run dev          # Start development server
-npm run build        # Build for production
-npm run start        # Start production server
+bun run dev          # Start development server
+bun run build        # Build for production
+bun start            # Start production server
 
 # Database
-npm run db:push      # Push schema changes to database
-npm run db:studio    # Open Drizzle Studio (database GUI)
-npm run db:generate  # Generate database migrations
+bun run db:push      # Push schema changes to database
+bun run db:studio    # Open Drizzle Studio (database GUI)
+bun run db:generate  # Generate database migrations
 
 # Code Quality
-npm run lint         # Run ESLint
-npm run type-check   # Run TypeScript type checking
+bun run lint         # Run ESLint
+bun run type-check   # Run TypeScript type checking
 ```
 
 ### Adding New Features
@@ -256,31 +256,21 @@ npm run type-check   # Run TypeScript type checking
 2. **Set environment variables** in Vercel dashboard
 3. **Deploy** - automatic builds and deployments
 
-### Docker Deployment
-
-```bash
-# Build the image
-docker build -t hr-expenses .
-
-# Run the container
-docker run -p 3000:3000 --env-file .env hr-expenses
-```
-
 ### Manual Deployment
 
 1. **Build the application**
    ```bash
-   npm run build
+   bun run build
    ```
 
 2. **Set up production database**
    ```bash
-   npm run db:push
+   bun run db:push
    ```
 
 3. **Start the production server**
    ```bash
-   npm start
+   bun start
    ```
 
 ## 📊 Usage Examples

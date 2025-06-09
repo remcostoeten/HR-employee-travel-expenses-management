@@ -1,22 +1,40 @@
 {
-  "name": "notr",
-  "description": "Note taking, without the fluff",
+  "name": "hr-expenses",
+  "description": "Employee travel expense management system with automatic distance calculation and cost tracking",
   "author": "Remco Stoeten",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "private": true,
+  "keywords": [
+    "hr",
+    "expenses",
+    "travel",
+    "employee",
+    "management",
+    "nextjs",
+    "typescript",
+    "drizzle"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/remcostoeten/hr-expenses.git"
+  },
+  "license": "MIT",
+  "engines": {
+    "node": ">=18.0.0",
+    "bun": ">=1.0.0"
+  },
   "scripts": {
     "dev": "next dev",
-    "s": "next dev",
-    "b": "next build",
     "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
+    "type-check": "tsc --noEmit",
     "format": "biome format --write .",
-    "dbstart": "docker-compose up -d",
-    "dbstop": "docker-compose down",
-    "dbclear": "tsx src/api/db/scripts/clear-tables.ts",
-    "dbvalidate": "tsx src/api/db/scripts/validate-schema.ts",
-    "gen": "drizzle-kit generate",
-    "push": "drizzle-kit push",
-    "studio": "drizzle-kit studio"
+    "db:generate": "drizzle-kit generate",
+    "db:push": "drizzle-kit push",
+    "db:studio": "drizzle-kit studio",
+    "db:clear": "tsx src/api/db/scripts/clear-tables.ts",
+    "db:validate": "tsx src/api/db/scripts/validate-schema.ts"
   },
   "dependencies": {
     "@hookform/resolvers": "^5.0.1",
