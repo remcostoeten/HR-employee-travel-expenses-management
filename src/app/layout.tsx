@@ -8,8 +8,8 @@ import { Inter } from 'next/font/google';
 const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
-	title: 'Authentication Demo',
-	description: 'A clean Next.js authentication demo with login and registration',
+	title: 'HR Expenses - Travel Management',
+	description: 'Manage employee travel expenses and calculate commuting costs',
 };
 
 export default function RootLayout({

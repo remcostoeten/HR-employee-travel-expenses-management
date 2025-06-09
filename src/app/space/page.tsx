@@ -1,5 +1,5 @@
 import { DashboardView } from '@/views/space-view';
-import { ProtectedLayout } from '@/components/layouts/protected-layout';
+import { AppLayout } from '@/components/layouts/app-layout';
 import { Suspense } from 'react';
 
 function DashboardLoading() {
@@ -18,13 +18,10 @@ function DashboardLoading() {
 
 export default function Page() {
 	return (
-		<ProtectedLayout
-			title="Dashboard"
-			description="Manage your account settings and connected services."
-		>
+		<AppLayout>
 			<Suspense fallback={<DashboardLoading />}>
 				<DashboardView />
 			</Suspense>
-		</ProtectedLayout>
+		</AppLayout>
 	);
 }

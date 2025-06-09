@@ -6,3 +6,4 @@
 
 export * from '@/modules/authenticatie/schemas';
 export * from '@/modules/admin/schemas';
+export * from '@/modules/employees/schemas';

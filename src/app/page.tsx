@@ -9,9 +9,9 @@ export default function HomePage() {
 		<Flex column className="w-screen min-h-screen mx-auto relative bg-background">
 			<Container>
 				<div className="flex flex-col items-center justify-center min-h-screen text-center space-y-8">
-					<h1 className="text-4xl font-bold tracking-tight">Authentication Demo</h1>
+					<h1 className="text-4xl font-bold tracking-tight">HR Expenses</h1>
 					<p className="text-xl text-muted-foreground max-w-2xl">
-						A clean Next.js authentication system with login and registration
+						Manage employee travel expenses and calculate commuting costs efficiently
 					</p>
 					<div className="flex gap-4">
 						<Button asChild>

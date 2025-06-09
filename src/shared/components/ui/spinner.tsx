@@ -1,3 +1,5 @@
+'use client';
+
 import { cn } from '@/shared/utilities';
 import { cva, type VariantProps } from 'class-variance-authority';
 

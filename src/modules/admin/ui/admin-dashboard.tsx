@@ -1,12 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { 
-  Card, 
-  CardContent, 
-  CardDescription, 
-  CardHeader, 
-  CardTitle,
+import {
   Tabs,
   TabsContent,
   TabsList,
@@ -30,9 +25,14 @@ export function AdminDashboard() {
       <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-6">
         <TabsList className="grid grid-cols-3 w-full max-w-md">
           <TabsTrigger value="overview">Overview</TabsTrigger>
+          <TabsTrigger value="create-users">Create Users</TabsTrigger>
           <TabsTrigger value="users">Users</TabsTrigger>
           <TabsTrigger value="settings">Settings</TabsTrigger>
         </TabsList>
+        
+        <TabsContent value="create-employee" className="space-y-6">
+          <createNewEmployee />
+        </TabsContent>
         
         <TabsContent value="overview" className="space-y-6">
           <AdminStats />

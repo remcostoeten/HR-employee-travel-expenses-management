@@ -8,6 +8,7 @@ import { useId } from 'react';
 export type TProps = {
 	checked: boolean;
 	onChange: () => void;
+	onCheckedChange?: (checked: boolean) => void;
 	size?: number;
 	color?: string;
 	variant?: 'round' | 'square';
@@ -31,6 +32,7 @@ const checkboxStyles = cva(
 export const CustomCheckbox = ({
 	checked,
 	onChange,
+	onCheckedChange,
 	size = 24,
 	color = '#866efb',
 	variant = 'round',
@@ -42,6 +44,13 @@ export const CustomCheckbox = ({
 	const iconTop = width * 0.2;
 	const iconLeft = width * 0.17;
 
+	const handleChange = () => {
+		onChange();
+		if (onCheckedChange) {
+			onCheckedChange(!checked);
+		}
+	};
+
 	return (
 		<div className="relative" style={{ width, height: width }}>
 			<div className="relative" style={{ width, height: width }}>
@@ -49,7 +58,7 @@ export const CustomCheckbox = ({
 					type="checkbox"
 					id={id}
 					checked={checked}
-					onChange={onChange}
+					onChange={handleChange}
 					className={clsx(
 						checkboxStyles({ variant }),
 						'z-10',
