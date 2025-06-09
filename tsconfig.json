@@ -1,0 +1,40 @@
+{
+  "compilerOptions": {
+    "target": "ES2017",
+    "lib": ["dom", "dom.iterable", "esnext"],
+    "noUnusedParameters":true,
+    "exactOptionalPropertyTypes": true,
+    "allowJs": true,
+    "skipLibCheck": true,
+    "strict": true,
+    "noEmit": true,
+    "esModuleInterop": true,
+    "module": "esnext",
+    "moduleResolution": "bundler",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "noImplicitAny": false,
+    "jsx": "preserve",
+    "incremental": true,
+    "plugins": [
+      {
+        "name": "next"
+      }
+    ],
+    "paths": {
+      "@/*": ["./src/*"],
+      "core/*": ["./src/core/*"],
+      "components/*": ["./src/components/*"],
+      "views": ["./src/views/*"],
+      "shared": ["./src/shared/*"],
+      "ui": ["./src/shared/components/ui/index.ts"],
+      "utilities": ["./src/shared/utilities/index.ts"],
+      "env": ["./src/api/env.ts"],
+      "schema": ["./src/api/db/schema.ts"],
+      "db": ["./src/api/db/connection.ts"],
+      "modules/*": ["./src/modules/*"]
+    }
+  },
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "tests/**/*.ts"],
+  "exclude": ["node_modules"]
+}

@@ -1,0 +1,19 @@
+.bglight-darktext {
+  background-color: var(--background);
+  color: var(--foreground);
+}
+
+.bgdark-lighttext {
+  background-color: var(--foreground);
+  color: var(--background);
+}
+
+.contain {
+	width: 100%;
+	max-width: var(--container-width);
+	margin: 0 auto;
+}
+
+.transX-y {
+  transform: translateY(4rem);
+}
