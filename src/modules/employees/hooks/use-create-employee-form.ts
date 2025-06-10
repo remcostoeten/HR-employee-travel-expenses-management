@@ -4,6 +4,8 @@ type TForm = {
   officeDays: string[];
   travelType: 'car' | 'public' | 'bike' | '';
   overrideKm?: number | undefined;
+  customEuroPerKm?: number | undefined;
+  customAgreementNotes?: string | undefined;
   isSubmitting: boolean;
   error?: string | undefined;
   result?: { distanceKm: number; costCents: number } | undefined;
@@ -22,6 +24,8 @@ const initialState: TForm = {
   officeDays: [],
   travelType: '',
   overrideKm: undefined,
+  customEuroPerKm: undefined,
+  customAgreementNotes: undefined,
   isSubmitting: false,
   error: undefined,
   result: undefined,

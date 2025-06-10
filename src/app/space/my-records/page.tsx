@@ -1,6 +1,6 @@
 import { EmployeeManagement } from '@/modules/employees/components';
 import { AppLayout } from '@/components/layouts/app-layout';
-import { AdminRoute } from '@/modules/authenticatie/components/auth-guard';
+import { ProtectedRoute } from '@/modules/authenticatie/components/auth-guard';
 import { Suspense } from 'react';
 
 function EmployeeLoading() {
@@ -17,14 +17,14 @@ function EmployeeLoading() {
   );
 }
 
-export default function EmployeesPage() {
+export default function MyRecordsPage() {
   return (
-    <AdminRoute>
+    <ProtectedRoute>
       <AppLayout>
         <Suspense fallback={<EmployeeLoading />}>
           <EmployeeManagement />
         </Suspense>
       </AppLayout>
-    </AdminRoute>
+    </ProtectedRoute>
   );
 }

@@ -16,10 +16,11 @@ import {
   DialogTitle,
 } from '@/shared/components/ui';
 import { toast } from '@/shared/components/toast';
-import { getAllEmployees } from '../api/queries/get-all-employees';
 import { deleteEmployee } from '../api/mutations/delete-employee';
+import { getEmployeesAction } from '../api/actions/get-employees-action';
 import { Search, Users, MapPin, Car, Bike, Bus, Trash2, Edit } from 'lucide-react';
 import { TableSkeleton } from '@/modules/admin/ui/table-skeleton';
+import { useAuth } from '@/modules/authenticatie/hooks/use-auth';
 
 type TEmployee = {
   id: string;
@@ -54,13 +55,19 @@ export function EmployeeOverview() {
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
   const [employeeToDelete, setEmployeeToDelete] = useState<TEmployee | null>(null);
   const [isDeleting, setIsDeleting] = useState(false);
+  const auth = useAuth();
+  const isAdmin = auth.user?.role === 'admin';
 
   useEffect(() => {
     async function fetchEmployees() {
       try {
-        const data = await getAllEmployees();
-        setEmployees(data);
-        setFilteredEmployees(data);
+        const result = await getEmployeesAction();
+        if (result.success) {
+          setEmployees(result.data);
+          setFilteredEmployees(result.data);
+        } else {
+          toast.error(result.error);
+        }
         setIsLoading(false);
       } catch (error) {
         console.error('Failed to fetch employees:', error);
@@ -161,13 +168,15 @@ export function EmployeeOverview() {
                   <th className="py-3 px-4 text-left font-medium">Office Days</th>
                   <th className="py-3 px-4 text-left font-medium">Distance</th>
                   <th className="py-3 px-4 text-right font-medium">Monthly Cost</th>
-                  <th className="py-3 px-4 text-right font-medium">Actions</th>
+                  {isAdmin && (
+                    <th className="py-3 px-4 text-right font-medium">Actions</th>
+                  )}
                 </tr>
               </thead>
               <tbody>
                 {filteredEmployees.length === 0 ? (
                   <tr>
-                    <td colSpan={7} className="py-6 text-center text-muted-foreground">
+                    <td colSpan={isAdmin ? 7 : 6} className="py-6 text-center text-muted-foreground">
                       {searchQuery ? 'No employees found matching your search' : 'No employees found'}
                     </td>
                   </tr>
@@ -204,29 +213,31 @@ export function EmployeeOverview() {
                         <td className="py-3 px-4 text-right font-medium">
                           €{(employee.monthlyCostCents / 100).toFixed(2)}
                         </td>
-                        <td className="py-3 px-4 text-right">
-                          <div className="flex justify-end gap-2">
-                            <Button
-                              variant="ghost"
-                              size="icon"
-                              className="h-8 w-8"
-                              onClick={() => {
-                                // TODO: Implement edit functionality
-                                toast.info('Edit functionality coming soon');
-                              }}
-                            >
-                              <Edit className="h-4 w-4" />
-                            </Button>
-                            <Button
-                              variant="ghost"
-                              size="icon"
-                              className="h-8 w-8 text-destructive hover:text-destructive/80"
-                              onClick={() => handleDeleteClick(employee)}
-                            >
-                              <Trash2 className="h-4 w-4" />
-                            </Button>
-                          </div>
-                        </td>
+                        {isAdmin && (
+                          <td className="py-3 px-4 text-right">
+                            <div className="flex justify-end gap-2">
+                              <Button
+                                variant="ghost"
+                                size="icon"
+                                className="h-8 w-8"
+                                onClick={() => {
+                                  // TODO: Implement edit functionality
+                                  toast.info('Edit functionality coming soon');
+                                }}
+                              >
+                                <Edit className="h-4 w-4" />
+                              </Button>
+                              <Button
+                                variant="ghost"
+                                size="icon"
+                                className="h-8 w-8 text-destructive hover:text-destructive/80"
+                                onClick={() => handleDeleteClick(employee)}
+                              >
+                                <Trash2 className="h-4 w-4" />
+                              </Button>
+                            </div>
+                          </td>
+                        )}
                       </tr>
                     );
                   })

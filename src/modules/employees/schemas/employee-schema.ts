@@ -17,6 +17,8 @@ export const employees = sqliteTable('employees', {
   officeDays: text('office_days').notNull(), // stored as JSON string
   distanceKm: integer('distance_km').notNull(),
   euroPerKm: integer('euro_per_km').notNull().default(21), // eurocents
+  customEuroPerKm: integer('custom_euro_per_km'), // custom override for special agreements
+  customAgreementNotes: text('custom_agreement_notes'), // notes about custom agreement
   createdAt: integer('created_at', { mode: 'timestamp' }).notNull().$defaultFn(() => new Date()),
   updatedAt: integer('updated_at', { mode: 'timestamp' }).notNull().$defaultFn(() => new Date()),
 });

@@ -2,7 +2,7 @@
 
 import { useCallback, useEffect, useState } from 'react';
 import { TAuthUser } from '../types';
-import { getCurrentUser } from '../server/queries/get-current-user';
+import { getCurrentUserAction } from '../server/actions/get-current-user-action';
 
 export function useCurrentUser() {
 	const [user, setUser] = useState<Partial<TAuthUser> | null>(null);
@@ -12,7 +12,7 @@ export function useCurrentUser() {
 	const fetchUser = useCallback(async () => {
 		try {
 			setIsLoading(true);
-			const result = await getCurrentUser();
+			const result = await getCurrentUserAction();
 
 			if (result.success && result.user) {
 				setUser(result.user);

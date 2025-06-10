@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { logout } from '../server/mutations/logout';
-import { getCurrentUser } from '../server/queries/get-current-user';
+import { getCurrentUserAction } from '../server/actions/get-current-user-action';
 import type { TAuthState, TAuthUser } from '../types';
 
 export function useAuth() {
@@ -11,7 +11,7 @@ export function useAuth() {
 	useEffect(() => {
 		async function fetchUser() {
 			try {
-				const result = await getCurrentUser();
+				const result = await getCurrentUserAction();
 				if (result.success && result.user?.id) {
 					setState({ status: 'authenticated', user: result.user as TAuthUser });
 				} else {

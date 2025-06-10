@@ -11,6 +11,7 @@ import {
 import { UserManagement } from './user-management';
 import { SystemSettings } from './system-settings';
 import { AdminStats } from './admin-stats';
+import { TravelCostSettings } from './travel-cost-settings';
 
 export function AdminDashboard() {
   const [activeTab, setActiveTab] = useState('overview');
@@ -23,16 +24,12 @@ export function AdminDashboard() {
       </div>
       
       <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-6">
-        <TabsList className="grid grid-cols-3 w-full max-w-md">
+        <TabsList className="grid grid-cols-4 w-full max-w-2xl">
           <TabsTrigger value="overview">Overview</TabsTrigger>
-          <TabsTrigger value="create-users">Create Users</TabsTrigger>
           <TabsTrigger value="users">Users</TabsTrigger>
+          <TabsTrigger value="travel-costs">Travel Costs</TabsTrigger>
           <TabsTrigger value="settings">Settings</TabsTrigger>
         </TabsList>
-        
-        <TabsContent value="create-employee" className="space-y-6">
-          <createNewEmployee />
-        </TabsContent>
         
         <TabsContent value="overview" className="space-y-6">
           <AdminStats />
@@ -41,7 +38,11 @@ export function AdminDashboard() {
         <TabsContent value="users" className="space-y-6">
           <UserManagement />
         </TabsContent>
-        
+
+        <TabsContent value="travel-costs" className="space-y-6">
+          <TravelCostSettings />
+        </TabsContent>
+
         <TabsContent value="settings" className="space-y-6">
           <SystemSettings />
         </TabsContent>

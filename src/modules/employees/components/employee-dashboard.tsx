@@ -8,7 +8,7 @@ import {
   CardTitle,
 } from '@/shared/components/ui';
 import { toast } from '@/shared/components/toast';
-import { getEmployeeStats } from '../api/queries/get-employee-stats';
+import { getEmployeeStatsAction } from '../api/actions/get-employee-stats-action';
 import { Users, MapPin, Euro, TrendingUp, Car, Bike, Bus } from 'lucide-react';
 
 type TEmployeeStats = {
@@ -42,8 +42,12 @@ export function EmployeeDashboard() {
   useEffect(() => {
     async function fetchStats() {
       try {
-        const data = await getEmployeeStats();
-        setStats(data);
+        const result = await getEmployeeStatsAction();
+        if (result.success) {
+          setStats(result.data);
+        } else {
+          toast.error(result.error);
+        }
         setIsLoading(false);
       } catch (error) {
         console.error('Failed to fetch employee stats:', error);

@@ -27,6 +27,8 @@ export function CreateEmployeeForm() {
           homeAddress: s.address,
           travelType: s.travelType as any,
           officeDays: s.officeDays,
+          ...(s.customEuroPerKm && { customEuroPerKm: s.customEuroPerKm }),
+          ...(s.customAgreementNotes && { customAgreementNotes: s.customAgreementNotes }),
         });
         d({ type: 'SUCCESS', payload: result });
         toast.success(`Employee ${s.name} created successfully! Distance: ${result.distanceKm}km, Monthly cost: €${(result.costCents/100).toFixed(2)}`);
@@ -95,6 +97,43 @@ export function CreateEmployeeForm() {
             <SelectItem value="bike">Bike</SelectItem>
           </SelectContent>
         </Select>
+      </div>
+
+      <div>
+        <Label>Custom Rate (eurocents per km)</Label>
+        <Input
+          type="number"
+          min="0"
+          value={s.customEuroPerKm ?? ''}
+          onChange={(e) =>
+            d({
+              type: 'SET',
+              field: 'customEuroPerKm',
+              payload: e.target.value === '' ? undefined : Number(e.target.value),
+            })
+          }
+        />
+        <p className="text-sm text-muted-foreground">
+          Leave blank to use default rate for travel type. €{s.customEuroPerKm ? (s.customEuroPerKm / 100).toFixed(2) : '0.21'} per km
+        </p>
+      </div>
+
+      <div>
+        <Label>Custom Agreement Notes</Label>
+        <Input
+          value={s.customAgreementNotes ?? ''}
+          onChange={(e) =>
+            d({
+              type: 'SET',
+              field: 'customAgreementNotes',
+              payload: e.target.value === '' ? undefined : e.target.value,
+            })
+          }
+          placeholder="Optional notes about special agreement"
+        />
+        <p className="text-sm text-muted-foreground">
+          Add notes if this employee has a special travel cost agreement
+        </p>
       </div>
 
       <div>

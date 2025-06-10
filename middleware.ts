@@ -21,6 +21,7 @@ const protectedRoutes = [
 
 const adminRoutes = [
   '/admin',
+  '/space/admin',
 ];
 
 // Helper function to check if a path matches any pattern

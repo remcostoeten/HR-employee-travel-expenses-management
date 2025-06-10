@@ -14,8 +14,7 @@ import {
   Skeleton
 } from '@/shared/components/ui';
 import { toast } from '@/shared/components/toast';
-import { getSystemSettings } from '../server/queries/get-system-settings';
-import { updateSystemSettings } from '../server/mutations/update-system-settings';
+import { getSystemSettingsAction, updateSystemSettingsAction } from '../server/actions/system-settings-actions';
 import { Settings, Save } from 'lucide-react';
 
 type SystemSettingsData = {
@@ -40,8 +39,12 @@ export function SystemSettings() {
   useEffect(() => {
     const fetchSettings = async () => {
       try {
-        const data = await getSystemSettings();
-        setSettings(data);
+        const result = await getSystemSettingsAction();
+        if (result.success) {
+          setSettings(result.data);
+        } else {
+          toast.error(result.error);
+        }
         setIsLoading(false);
       } catch (error) {
         console.error('Failed to fetch settings:', error);
@@ -56,8 +59,12 @@ export function SystemSettings() {
   const handleSaveSettings = async () => {
     setIsSaving(true);
     try {
-      await updateSystemSettings(settings);
-      toast.success('Settings saved successfully');
+      const result = await updateSystemSettingsAction(settings);
+      if (result.success) {
+        toast.success('Settings saved successfully');
+      } else {
+        toast.error(result.error);
+      }
     } catch (error) {
       console.error('Failed to save settings:', error);
       toast.error('Failed to save settings');

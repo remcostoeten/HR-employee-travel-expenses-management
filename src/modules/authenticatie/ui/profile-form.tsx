@@ -5,7 +5,7 @@ import { TBaseUser } from '@/shared/types/base';
 import { useState, useTransition } from 'react';
 import { useAuth } from '../hooks/use-auth';
 import { updateProfile } from '../server/mutations/update-profile';
-import { getCurrentUser } from '../server/queries/get-current-user';
+import { getCurrentUserAction } from '../server/actions/get-current-user-action';
 import { deleteAccount } from '../server/mutations/delete-account';
 
 import Link from 'next/link';
@@ -54,7 +54,7 @@ export function ProfileForm() {
 				const result = await updateProfile(formData);
 
 				if (result.success) {
-					const updatedUser = await getCurrentUser();
+					const updatedUser = await getCurrentUserAction();
 					if (updatedUser && updatedUser.user) {
 						auth.updateUser(updatedUser.user as TBaseUser);
 						toast.success('Profile updated successfully');

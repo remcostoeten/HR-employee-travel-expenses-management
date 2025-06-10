@@ -10,6 +10,11 @@ export async function deleteEmployee(employeeId: string) {
     throw new Error('User not authenticated');
   }
 
+  // Only admins can delete employees
+  if (userResult.user.role !== 'admin') {
+    throw new Error('Unauthorized: Only administrators can delete employees');
+  }
+
   const result = await db
     .delete(employees)
     .where(eq(employees.id, employeeId))

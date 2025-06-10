@@ -21,9 +21,7 @@ import {
   SelectValue
 } from '@/shared/components/ui';
 import { toast } from '@/shared/components/toast';
-import { getAllUsers } from '../server/queries/get-all-users';
-import { updateUserRole } from '../server/mutations/update-user-role';
-import { deleteUser } from '../server/mutations/delete-user';
+import { getAllUsersAction, updateUserRoleAction, deleteUserAction } from '../server/actions/user-management-actions';
 import { User, Edit, Trash, Search } from 'lucide-react';
 import { TableSkeleton } from './table-skeleton';
 
@@ -48,9 +46,13 @@ export function UserManagement() {
   useEffect(() => {
     const fetchUsers = async () => {
       try {
-        const data = await getAllUsers();
-        setUsers(data);
-        setFilteredUsers(data);
+        const result = await getAllUsersAction();
+        if (result.success) {
+          setUsers(result.data);
+          setFilteredUsers(result.data);
+        } else {
+          toast.error(result.error);
+        }
         setIsLoading(false);
       } catch (error) {
         console.error('Failed to fetch users:', error);
@@ -90,16 +92,19 @@ export function UserManagement() {
     if (!selectedUser) return;
 
     try {
-      await updateUserRole(selectedUser.id, newRole);
+      const result = await updateUserRoleAction(selectedUser.id, newRole);
+      if (result.success) {
+        // Update local state
+        const updatedUsers = users.map(user =>
+          user.id === selectedUser.id ? { ...user, role: newRole } : user
+        );
 
-      // Update local state
-      const updatedUsers = users.map(user =>
-        user.id === selectedUser.id ? { ...user, role: newRole } : user
-      );
-
-      setUsers(updatedUsers);
-      toast.success(`User role updated to ${newRole}`);
-      setIsEditDialogOpen(false);
+        setUsers(updatedUsers);
+        toast.success(`User role updated to ${newRole}`);
+        setIsEditDialogOpen(false);
+      } else {
+        toast.error(result.error);
+      }
     } catch (error) {
       console.error('Failed to update user role:', error);
       toast.error('Failed to update user role');
@@ -110,14 +115,17 @@ export function UserManagement() {
     if (!selectedUser) return;
 
     try {
-      await deleteUser(selectedUser.id);
+      const result = await deleteUserAction(selectedUser.id);
+      if (result.success) {
+        // Update local state
+        const updatedUsers = users.filter(user => user.id !== selectedUser.id);
+        setUsers(updatedUsers);
 
-      // Update local state
-      const updatedUsers = users.filter(user => user.id !== selectedUser.id);
-      setUsers(updatedUsers);
-
-      toast.success('User deleted successfully');
-      setIsDeleteDialogOpen(false);
+        toast.success('User deleted successfully');
+        setIsDeleteDialogOpen(false);
+      } else {
+        toast.error(result.error);
+      }
     } catch (error) {
       console.error('Failed to delete user:', error);
       toast.error('Failed to delete user');

@@ -9,7 +9,7 @@ import {
   Skeleton
 } from '@/shared/components/ui';
 import { toast } from '@/shared/components/toast';
-import { getAdminStats } from '../server/queries/get-admin-stats';
+import { getAdminStatsAction } from '../server/actions/admin-stats-actions';
 import { Users, UserPlus, Activity, Calendar } from 'lucide-react';
 
 type AdminStatsData = {
@@ -26,8 +26,12 @@ export function AdminStats() {
   useEffect(() => {
     const fetchStats = async () => {
       try {
-        const data = await getAdminStats();
-        setStats(data);
+        const result = await getAdminStatsAction();
+        if (result.success) {
+          setStats(result.data);
+        } else {
+          toast.error(result.error);
+        }
         setIsLoading(false);
       } catch (error) {
         console.error('Failed to fetch stats:', error);

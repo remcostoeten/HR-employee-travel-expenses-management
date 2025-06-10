@@ -16,14 +16,15 @@ import {
   SidebarMenuItem,
   SidebarRail,
 } from '@/shared/components/ui/sidebar';
-import { 
-  Home, 
-  Users, 
-  Settings, 
-  LogOut, 
+import {
+  Home,
+  Users,
+  Settings,
+  LogOut,
   BarChart3,
   UserPlus,
-  Shield
+  Shield,
+  Calendar
 } from 'lucide-react';
 import Link from 'next/link';
 import { useRouter, usePathname } from 'next/navigation';
@@ -35,14 +36,27 @@ const navigationItems = [
     icon: Home,
   },
   {
-    title: 'Employees',
-    url: '/space/employees',
+    title: 'Calendar',
+    url: '/space/calendar',
+    icon: Calendar,
+  },
+  {
+    title: 'My Records',
+    url: '/space/my-records',
     icon: Users,
   },
   {
     title: 'Reports',
     url: '/space/reports',
     icon: BarChart3,
+  },
+];
+
+const adminNavigationItems = [
+  {
+    title: 'Employees',
+    url: '/space/employees',
+    icon: Users,
   },
 ];
 
@@ -97,8 +111,8 @@ export function AppSidebar() {
             <SidebarMenu>
               {navigationItems.map((item) => (
                 <SidebarMenuItem key={item.title}>
-                  <SidebarMenuButton 
-                    asChild 
+                  <SidebarMenuButton
+                    asChild
                     isActive={pathname === item.url}
                   >
                     <Link href={item.url}>
@@ -111,6 +125,29 @@ export function AppSidebar() {
             </SidebarMenu>
           </SidebarGroupContent>
         </SidebarGroup>
+
+        {isAdmin && (
+          <SidebarGroup>
+            <SidebarGroupLabel>Management</SidebarGroupLabel>
+            <SidebarGroupContent>
+              <SidebarMenu>
+                {adminNavigationItems.map((item) => (
+                  <SidebarMenuItem key={item.title}>
+                    <SidebarMenuButton
+                      asChild
+                      isActive={pathname === item.url}
+                    >
+                      <Link href={item.url}>
+                        <item.icon className="h-4 w-4" />
+                        <span>{item.title}</span>
+                      </Link>
+                    </SidebarMenuButton>
+                  </SidebarMenuItem>
+                ))}
+              </SidebarMenu>
+            </SidebarGroupContent>
+          </SidebarGroup>
+        )}
 
         {isAdmin && (
           <SidebarGroup>
